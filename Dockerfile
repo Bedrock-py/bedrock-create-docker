@@ -97,11 +97,35 @@ RUN mkdir -p /data/db
 RUN mkdir -p /opt/bedrock/conf
 RUN mkdir -p /opt/bedrock/bin
 RUN mkdir -p /opt/bedrock/package
+RUN mkdir -p /opt/bedrock/opals
+RUN mkdir -p /python
 
 ADD ./conf/bedrock.conf     /opt/bedrock/conf/bedrock.conf
 ADD ./conf/mongod.init.d    /etc/init.d/mongod
+COPY ./conf/opalinit.py /python/opalinit.py
 
 RUN /opt/bedrock/bin/install.sh
 
+
+
 # to test this you can run ./test_docker.sh which will build, run, and test the container.
 CMD service mongod start && /usr/sbin/apache2ctl -D FOREGROUND; /usr/sbin/apache2ctl -D FOREGROUND; /usr/sbin/apache2ctl -D FOREGROUND
+
+# install available opals
+RUN pip install git+https://github.com/Bedrock-py/bedrock-core
+
+RUN service mongod start && pip install git+https://github.com/Bedrock-py/opal-analytics-logit2
+RUN service mongod start && pip install git+https://github.com/Bedrock-py/opal-analytics-stan
+RUN service mongod start && pip install git+https://github.com/Bedrock-py/opal-analytics-statstests
+RUN service mongod start && pip install git+https://github.com/Bedrock-py/opal-analytics-aggregate
+RUN service mongod start && pip install git+https://github.com/Bedrock-py/opal-analytics-select-from-dataframe
+RUN service mongod start && pip install git+https://github.com/Bedrock-py/opal-dataloader-filter-truth
+RUN service mongod start && pip install git+https://github.com/Bedrock-py/opal-analytics-clustering
+RUN service mongod start && pip install git+https://github.com/Bedrock-py/opal-analytics-classification
+RUN service mongod start && pip install git+https://github.com/Bedrock-py/opal-visualization-roc
+RUN service mongod start && pip install git+https://github.com/Bedrock-py/opal-analytics-dimensionreduction
+RUN service mongod start && pip install git+https://github.com/Bedrock-py/opal-visualization-linechart
+RUN service mongod start && pip install git+https://github.com/Bedrock-py/opal-visualization-scatterplot
+RUN service mongod start && pip install git+https://github.com/Bedrock-py/opal-dataloader-ingest-spreadsheet
+RUN service mongod start && pip install git+https://github.com/Bedrock-py/opal-analytics-summarize
+RUN service mongod start && pip install git+https://github.com/Bedrock-py/opal-analytics-r
