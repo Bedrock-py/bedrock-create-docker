@@ -102,7 +102,6 @@ RUN mkdir -p /python
 
 ADD ./conf/bedrock.conf     /opt/bedrock/conf/bedrock.conf
 ADD ./conf/mongod.init.d    /etc/init.d/mongod
-COPY ./conf/opalinit.py /python/opalinit.py
 
 RUN /opt/bedrock/bin/install.sh
 
