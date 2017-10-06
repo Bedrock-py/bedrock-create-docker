@@ -98,14 +98,11 @@ RUN mkdir -p /opt/bedrock/conf
 RUN mkdir -p /opt/bedrock/bin
 RUN mkdir -p /opt/bedrock/package
 RUN mkdir -p /opt/bedrock/opals
-RUN mkdir -p /python
 
 ADD ./conf/bedrock.conf     /opt/bedrock/conf/bedrock.conf
 ADD ./conf/mongod.init.d    /etc/init.d/mongod
 
 RUN /opt/bedrock/bin/install.sh
-
-
 
 # to test this you can run ./test_docker.sh which will build, run, and test the container.
 CMD service mongod start && /usr/sbin/apache2ctl -D FOREGROUND; /usr/sbin/apache2ctl -D FOREGROUND; /usr/sbin/apache2ctl -D FOREGROUND
